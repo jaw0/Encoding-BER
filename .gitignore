@@ -1,0 +1,10 @@
+*gz
+*.tar
+.exists
+blib
+CVS
+prof.out
+Makefile.old
+Makefile
+p2
+perf
