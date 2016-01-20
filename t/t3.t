@@ -5,25 +5,21 @@
 # Created: 2007-Feb-10 16:42 (EST)
 # Function: dumper test
 #
-# $Id: t3.t,v 1.2 2007/02/10 22:23:24 jaw Exp $
+# $Id: t3.t,v 1.3 2015/12/15 20:28:44 jaw Exp $
 
 use lib 'lib';
 use Encoding::BER::Dumper;
 use strict;
 
-print "1..6\n";
+print "1..5\n";
 my $tno = 1;
 
 my $b = pl2ber([
 		0, 1, 2, 3,
-		{ foo => 'a', bar => 'b' },
+		{ foo => 'a' },
 		undef ]);
 
-my $expect = qq{
-    30 20 02 01 00 02 01 01  02 01 02 02 01 03 63 10
-    04 03 62 61 72 04 01 62  04 03 66 6F 6F 04 01 61
-    05 00                                           
-};
+my $expect = '301802010002010102010202010363080403666f6f0401610500';
 
 $expect =~ s/\s//gs;
 $expect = pack('H*', $expect);
@@ -35,7 +31,6 @@ my $d = ber2pl($b);
 test( @$d == 6 );
 test( $d->[2] == 2 );
 test( $d->[4]{foo} eq 'a');
-test( $d->[4]{bar} eq 'b');
 test( ! defined $d->[5] );
 
 sub test {
